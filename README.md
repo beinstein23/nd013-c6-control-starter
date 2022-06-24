@@ -104,15 +104,37 @@ pip3 install matplotlib
 
 Answer the following questions:
 - Add the plots to your report and explain them (describe what you see)
+
+The first figure is related to the steering error and steering output. The error curve shows a low frequency oscillation. Oscilation implies that there are still at least one pair complex conjugate eigen values in the closed loop transfer function, while low frequency means the trajectory is rekatively smooth. 
+![img1](images/output1.png)
+
+The second figure is about the velocity control. The intended speed in the disired trajectory is 3 m/s nearly everywhere, which brings about many difficulties in the project. First, in the urban surroundings, this speed is hard to reach especially to avoid the collisions. Second, to control the control of yaw angle is significnatly influenced by the current vehicle speed, and at the same time, at the beginning of the simulation, the speed vehicle is zero which means the speed of the underly vehicle has a very large range. Hence, the PID parameter in this case is hard to determine. One solution to this kind of problem might be gain scheduling.
+
+
+![img1](images/output2.png)
+
+
+
 - What is the effect of the PID according to the plots, how each part of the PID affects the control command?
+P: propotional part, provide a basic output from control. The input of the controller is always the error between the disried value and the feedback value (usually output of the whole system).
+D: derivative part, it usually makes the plant have a faster reaction on the external input. In the control theory it brings about one zero in the open loop transfer function, which makes the system have a better phase gain meaning that the stability can be improved. However, due to the mathematical property of the derivatives, the high frequency contained in the process noises are augmented.
+I: Integral part, which is often introduced to eliminate the static error. 
+
 - How would you design a way to automatically tune the PID parameters?
+For instance, using the twiddle algorithm introduced in the lesson, or use the gradient method in the framework of a classic optimization problem.
+
 - PID controller is a model free controller, i.e. it does not use a model of the car. Could you explain the pros and cons of this type of controller?
+PID controller is the most robust controller It has a very long history (over hundres years), but is even still widely used in today's industrial control systems and a variety of other applications requiring continuously modulated control. 
+
+Compared to many advanced state-space control methods, which require the exact description of the system, the PID parameters are hard to tune, and the results may be far from satisfactory without considering too many external disturbances.
+
+Usually we are not required to know the parameter of the modells when using this method. However, if we identify the parameter of the plant, like the zeros and the poles of the open loop system, we are also able to design a very high performance closed loop system.
+
+
+
 - (Optional) What would you do to improve the PID controller?
 
+Using Gain-Scheduling.
 
-### Tips:
 
-- When you wil be testing your c++ code, restart the Carla simulator to remove the former car from the simulation.
-- If the simulation freezes on the desktop mode but is still running on the terminal, close the desktop and restart it.
-- When you will be tuning the PID parameters, try between those values:
 
