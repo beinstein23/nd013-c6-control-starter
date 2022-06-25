@@ -137,4 +137,14 @@ Usually we are not required to know the parameter of the modells when using this
 Using Gain-Scheduling.
 
 
+## Results figures
+
+
+![img1](images/s1.png)
+![img1](images/s2.png)
+![img1](images/s3.png)
+![img1](images/s4.png)
+![img1](images/s5.png)
+![img1](images/s6.png)
+
 
