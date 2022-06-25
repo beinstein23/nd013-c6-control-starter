@@ -305,7 +305,7 @@ int main ()
             } 
           }
          	 
-         min_idx = min(min_idx + 3, (int)x_points.size()-1);
+         min_idx = min(min_idx + 5, (int)x_points.size()-1);
          /**
           * TODO (step 3): compute the steer error (error_steer) from the position and the desired trajectory
           **/
@@ -316,7 +316,7 @@ int main ()
            std::cout<<"planned position: x="<<x_points[min_idx]<<"; y ="<<y_points[min_idx]<<std::endl;
           	std::cout<<" yaw:"<< yaw<<std::endl;
 				std::cout<<" desired yaw:"<< angle_between_points(x_position,y_position,x_points[min_idx],y_points[min_idx])<<std::endl;
-				
+				std::cout<<"debug: dx ="<< -x_position + x_points[min_idx] <<"; dy =" <<-y_position + y_points[min_idx]<<std::endl; 
           double steer_output;
 
           /**
@@ -328,7 +328,13 @@ int main ()
           
           pid_steer.UpdateError(error_steer);
           steer_output = pid_steer.TotalError();
-
+				
+                  // Compute control to apply
+          while(steer_output > M_PI) steer_output-= 2* M_PI;
+          while(steer_output < -M_PI) steer_output+= 2* M_PI;
+			  std::cout<<"error_steer"<<error_steer<<endl;
+          std::cout<<"steer_output"<<steer_output<<endl;
+          
           // Save data
           file_steer.seekg(std::ios::beg);
           for(int j=0; j < i - 1; ++j) {
